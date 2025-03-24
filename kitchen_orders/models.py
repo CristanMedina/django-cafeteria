@@ -15,4 +15,3 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Orden {self.id} - {self.customer_name} ({self.get_status_display()})"
-
