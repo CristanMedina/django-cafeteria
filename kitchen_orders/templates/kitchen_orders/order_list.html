@@ -1,0 +1,23 @@
+<h2>Órdenes de Cocina</h2>
+<a href="{% url 'order_create' %}">Crear Orden</a>
+<table>
+    <tr>
+        <th>Cliente</th>
+        <th>Detalles</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+    </tr>
+    {% for order in orders %}
+    <tr>
+        <td>{{ order.customer_name }}</td>
+        <td>{{ order.details }}</td>
+        <td>{{ order.get_status_display }}</td>
+        <td>
+            {% if order.status == "preparing" %}
+                <a href="{% url 'order_update' order.id %}">Editar</a>
+            {% endif %}
+            <a href="{% url 'order_delete' order.id %}" onclick="return confirm('¿Eliminar esta orden?')">Eliminar</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
