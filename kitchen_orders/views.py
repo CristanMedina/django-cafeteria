@@ -32,7 +32,7 @@ def order_update(request, order_id):
             return redirect('order_list')
     else:
         form = OrderForm(instance=order)
-    
+
     return render(request, 'kitchen_orders/order_form.html', {'form': form})
 
 # Eliminar orden
