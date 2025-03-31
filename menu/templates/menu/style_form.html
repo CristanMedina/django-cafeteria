@@ -1,0 +1,50 @@
+<h1>{{ form.instance.pk|yesno:"Edit Style,Add Style" }}</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+<a href="{% url 'style_list' %}">Back to Style List</a>
+
+<h2>Ingredients for Selected Style</h2>
+<div id="ingredients-container">
+    <p>Select a style to see its ingredients.</p>
+</div>
+
+<a href="{% url 'style_list' %}">Back to Style List</a>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const styleSelect = document.querySelector('#id_style'); 
+        const ingredientsContainer = document.getElementById('ingredients-container');
+
+        styleSelect.addEventListener('change', function () {
+            const styleId = this.value;
+
+            if (styleId) {
+                fetch(`/menu/get_ingredients/${styleId}/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        ingredientsContainer.innerHTML = '';
+                        if (data.ingredients.length > 0) {
+                            const ul = document.createElement('ul');
+                            data.ingredients.forEach(ingredient => {
+                                const li = document.createElement('li');
+                                li.textContent = ingredient.name;
+                                ul.appendChild(li);
+                            });
+                            ingredientsContainer.appendChild(ul);
+                        } else {
+                            ingredientsContainer.innerHTML = '<p>No ingredients found for this style.</p>';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching ingredients:', error);
+                        ingredientsContainer.innerHTML = '<p>Error loading ingredients.</p>';
+                    });
+            } else {
+                ingredientsContainer.innerHTML = '<p>Select a style to see its ingredients.</p>';
+            }
+        });
+    });
+</script>

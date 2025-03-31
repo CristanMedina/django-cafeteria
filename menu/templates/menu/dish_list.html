@@ -1,0 +1,12 @@
+<!-- filepath: /c:/Users/silve/OneDrive/Desktop/django-cafeteria-master/menu/templates/menu/dish_list.html -->
+<h1>Dish List</h1>
+<a href="{% url 'dish_create' %}">Add Dish</a>
+<ul>
+    {% for dish in dishes %}
+        <li>
+            {{ dish.name }} - ${{ dish.price }}
+            <a href="{% url 'dish_update' dish.pk %}">Edit</a>
+            <a href="{% url 'dish_delete' dish.pk %}">Delete</a>
+        </li>
+    {% endfor %}
+</ul>

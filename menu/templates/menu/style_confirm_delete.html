@@ -1,0 +1,8 @@
+<!-- filepath: /c:/Users/silve/OneDrive/Desktop/django-cafeteria-master/menu/templates/menu/style_confirm_delete.html -->
+<h1>Delete Style</h1>
+<p>Are you sure you want to delete "{{ style.name }}"?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Yes, delete</button>
+    <a href="{% url 'style_list' %}">Cancel</a>
+</form>
