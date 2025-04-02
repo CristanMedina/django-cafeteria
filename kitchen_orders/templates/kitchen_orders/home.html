@@ -9,7 +9,17 @@
 <body class="bg-light">
     <div class="container text-center mt-5">
         <h1 class="mb-4">Bienvenido a Kitchen Orders</h1>
-        <a href="{% url 'order_list' %}" class="btn btn-primary">Ver Órdenes</a>
+
+        {% if user.is_authenticated %}
+            <p>Hola, {{ user.username }} | <a href="{% url 'logout' %}" class="btn btn-danger">Cerrar sesión</a></p>
+            {% if user.is_staff %}
+                <a href="{% url 'order_list' %}" class="btn btn-primary">Ver Órdenes</a>
+            {% else %}
+                <a href="{% url 'order_create' %}" class="btn btn-success">Crear Nueva Orden</a>
+            {% endif %}
+        {% else %}
+            <a href="{% url 'login' %}" class="btn btn-primary">Iniciar sesión</a>
+        {% endif %}
     </div>
 </body>
 </html>
